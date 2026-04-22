@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVVVD — DROP 001</title>
+  <meta
+    name="description"
+    content="SVVVD DROP 001 — limited football jerseys in Red Flag, Azul, and Pinked."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Courier+Prime:wght@400;700&family=VT323&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- BAG DRAWER -->
+  <aside class="bag-drawer" id="bagDrawer" aria-hidden="true">
+    <div class="bag-header">
+      <div>
+        <p class="bag-eyebrow">SVVVD</p>
+        <h2 class="bag-title">Your Bag</h2>
+      </div>
+      <button class="bag-close" id="closeBagBtn" aria-label="Close bag">×</button>
+    </div>
+
+    <div class="bag-items" id="bagItems">
+      <!-- Injected by JS -->
+    </div>
+
+    <div class="bag-footer">
+      <div class="bag-summary">
+        <span>Subtotal</span>
+        <strong id="bagSubtotal">€0</strong>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+      <p class="bag-note">
+        Demo storefront for DROP 001. Connect this later to Stripe, Shopify, or a checkout page.
+      </p>
+    </div>
+  </aside>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <a href="#home" class="nav-logo">
+      <span class="nav-logo-main">SVVVD</span>
+      <span class="nav-logo-sub">DROP 001</span>
+    </a>
+
+    <button class="nav-menu-btn" id="navMenuBtn" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-links-wrap" id="navLinksWrap">
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#drop">Drop</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <button class="nav-bag-btn" id="openBagBtn">
+        BAG <span id="bagCount">[ 0 ]</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div class="hero-stars"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-inner">
+      <p class="hero-eyebrow reveal">DROP 001 / LIMITED RELEASE</p>
+
+      <div class="hero-logo-wrap reveal delay-1">
+        <div class="logo-blob logo-blob-main">
+          <span>SVVVD</span>
+        </div>
+        <div class="logo-blob logo-blob-side">
+          <span>Y2K</span>
+        </div>
+      </div>
+
+      <h1 class="hero-title reveal delay-2">
+        FOOTBALL MEMORY<br />
+        FUTURE DISTORTION
+      </h1>
+
+      <p class="hero-text reveal delay-3">
+        Limited pieces. Intentional details. The 22, the stripes, the mesh —
+        everything is built for those who carry the era in the way they move.
+      </p>
+
+      <div class="hero-actions reveal delay-4">
+        <a href="#drop" class="btn btn-primary">Shop Drop 001</a>
+        <a href="#about" class="btn btn-secondary">Read the Story</a>
+      </div>
+    </div>
+
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>SVVVD Y2K</span>
+        <span>✦</span>
+        <span>DROP 001 NOW LIVE</span>
+        <span>✦</span>
+        <span>RED FLAG</span>
+        <span>✦</span>
+        <span>AZUL</span>
+        <span>✦</span>
+        <span>PINKED</span>
+        <span>✦</span>
+        <span>LIMITED QUANTITIES</span>
+        <span>✦</span>
+        <span>€65</span>
+        <span>✦</span>
+
+        <span>SVVVD Y2K</span>
+        <span>✦</span>
+        <span>DROP 001 NOW LIVE</span>
+        <span>✦</span>
+        <span>RED FLAG</span>
+        <span>✦</span>
+        <span>AZUL</span>
+        <span>✦</span>
+        <span>PINKED</span>
+        <span>✦</span>
+        <span>LIMITED QUANTITIES</span>
+        <span>✦</span>
+        <span>€65</span>
+        <span>✦</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- DROP -->
+    <section class="section drop-section" id="drop">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Collection</p>
+        <h2 class="section-title">DROP 001</h2>
+        <p class="section-subtitle">
+          Three colorways. One silhouette. Built in limited quantities.
+        </p>
+      </div>
+
+      <div class="product-grid">
+        <!-- RED FLAG -->
+        <article class="product-card reveal" data-product-id="red-flag">
+          <div class="product-topline product-topline-red"></div>
+
+          <div class="product-image-wrap red-bg">
+            <span class="product-badge">10 PIECES</span>
+            <img src="images/red-flag.png" alt="SVVVD Red Flag jersey" class="product-image" />
+          </div>
+
+          <div class="product-body">
+            <p class="product-code">DROP 001</p>
+            <h3 class="product-name red-text">RED FLAG</h3>
+            <p class="product-desc">
+              A deep red edition built around the 22, stripe tension, and early-2000s sports energy.
+            </p>
+
+            <div class="product-meta">
+              <div>
+                <span class="meta-label">Price</span>
+                <strong class="meta-value">€65</strong>
+              </div>
+              <div>
+                <span class="meta-label">Available</span>
+                <strong class="meta-value">S / M / L</strong>
+              </div>
+            </div>
+
+            <div class="size-block">
+              <span class="size-label">Select size</span>
+              <div class="size-options">
+                <button class="size-btn" data-size="S">S</button>
+                <button class="size-btn" data-size="M">M</button>
+                <button class="size-btn" data-size="L">L</button>
+              </div>
+            </div>
+
+            <button
+              class="add-btn"
+              data-name="Red Flag"
+              data-price="65"
+              data-image="images/red-flag.png"
+              data-stock="10 pieces"
+            >
+              Add to Bag
+            </button>
+          </div>
+        </article>
+
+        <!-- AZUL -->
+        <article class="product-card reveal delay-1" data-product-id="azul">
+          <div class="product-topline product-topline-blue"></div>
+
+          <div class="product-image-wrap azul-bg">
+            <span class="product-badge">10 PIECES</span>
+            <img src="images/azul.png" alt="SVVVD Azul jersey" class="product-image" />
+          </div>
+
+          <div class="product-body">
+            <p class="product-code">DROP 001</p>
+            <h3 class="product-name azul-text">AZUL</h3>
+            <p class="product-desc">
+              A midnight-blue version balancing collegiate sport references with a sharper digital mood.
+            </p>
+
+            <div class="product-meta">
+              <div>
+                <span class="meta-label">Price</span>
+                <strong class="meta-value">€65</strong>
+              </div>
+              <div>
+                <span class="meta-label">Available</span>
+                <strong class="meta-value">S / M / L</strong>
+              </div>
+            </div>
+
+            <div class="size-block">
+              <span class="size-label">Select size</span>
+              <div class="size-options">
+                <button class="size-btn" data-size="S">S</button>
+                <button class="size-btn" data-size="M">M</button>
+                <button class="size-btn" data-size="L">L</button>
+              </div>
+            </div>
+
+            <button
+              class="add-btn"
+              data-name="Azul"
+              data-price="65"
+              data-image="images/azul.png"
+              data-stock="10 pieces"
+            >
+              Add to Bag
+            </button>
+          </div>
+        </article>
+
+        <!-- PINKED -->
+        <article class="product-card reveal delay-2" data-product-id="pinked">
+          <div class="product-topline product-topline-pink"></div>
+
+          <div class="product-image-wrap pink-bg">
+            <span class="product-badge">15 PIECES</span>
+            <img src="images/pinked.png" alt="SVVVD Pinked jersey" class="product-image" />
+          </div>
+
+          <div class="product-body">
+            <p class="product-code">DROP 001</p>
+            <h3 class="product-name pink-text">PINKED</h3>
+            <p class="product-desc">
+              The softest tone in the drop, contrasted with the same graphic code and controlled attitude.
+            </p>
+
+            <div class="product-meta">
+              <div>
+                <span class="meta-label">Price</span>
+                <strong class="meta-value">€65</strong>
+              </div>
+              <div>
+                <span class="meta-label">Available</span>
+                <strong class="meta-value">XS / S / M</strong>
+              </div>
+            </div>
+
+            <div class="size-block">
+              <span class="size-label">Select size</span>
+              <div class="size-options">
+                <button class="size-btn" data-size="XS">XS</button>
+                <button class="size-btn" data-size="S">S</button>
+                <button class="size-btn" data-size="M">M</button>
+              </div>
+            </div>
+
+            <button
+              class="add-btn"
+              data-name="Pinked"
+              data-price="65"
+              data-image="images/pinked.png"
+              data-stock="15 pieces"
+            >
+              Add to Bag
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <div class="drop-banner reveal">
+        <div>
+          <p class="drop-banner-eyebrow">Limited Run</p>
+          <h3 class="drop-banner-title">THREE COLORWAYS / ONE CODE</h3>
+          <p class="drop-banner-text">
+            DROP 001 introduces the core silhouette of SVVVD through Red Flag, Azul, and Pinked.
+          </p>
+        </div>
+        <a href="#contact" class="btn btn-secondary">Contact / Orders</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section about-section" id="about">
+      <div class="about-visual reveal">
+        <div class="about-frame">
+          <span class="corner corner-tl"></span>
+          <span class="corner corner-tr"></span>
+          <span class="corner corner-bl"></span>
+          <span class="corner corner-br"></span>
+
+          <p class="about-big-number">22</p>
+          <div class="about-line"></div>
+          <p class="about-quote">
+            Each piece is limited. Each detail is intentional.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-copy reveal delay-1">
+        <p class="section-eyebrow">About SVVVD</p>
+        <h2 class="section-title about-title">A BRAND IN ITS FIRST SIGNAL</h2>
+
+        <p class="about-text">
+          SVVVD is a work in progress by design. DROP 001 is the first release:
+          limited in quantity, direct in attitude, and built around a single visual code.
+        </p>
+
+        <p class="about-text">
+          The number 22, the stripes, and the mesh are not random details. They are the
+          structure of the piece — deliberate references shaped into something current.
+          This is not about nostalgia alone. It is about wearing the era with intention.
+        </p>
+
+        <div class="about-stats">
+          <div class="stat">
+            <strong>3</strong>
+            <span>Colorways</span>
+          </div>
+          <div class="stat">
+            <strong>35</strong>
+            <span>Total Pieces</span>
+          </div>
+          <div class="stat">
+            <strong>001</strong>
+            <span>First Drop</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact-section" id="contact">
+      <div class="section-head reveal">
+        <p class="section-eyebrow">Contact</p>
+        <h2 class="section-title contact-title">STAY IN THE LOOP</h2>
+        <p class="section-subtitle">
+          For orders, questions, or future drops, reach out through Instagram or email.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card reveal">
+          <p class="contact-card-label">Instagram</p>
+          <a
+            href="https://www.instagram.com/svvvd.y2k?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link"
+          >
+            @svvvd.y2k
+          </a>
+          <p class="contact-card-text">
+            Follow the brand, see the pieces in motion, and stay updated on the next release.
+          </p>
+        </div>
+
+        <div class="contact-card reveal delay-1">
+          <p class="contact-card-label">Email</p>
+          <a href="mailto:svvvdy2k@gmail.com" class="contact-link">svvvdy2k@gmail.com</a>
+          <p class="contact-card-text">
+            Use this for direct order requests, collaborations, and customer questions.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-logo">SVVVD</p>
+    <p class="footer-copy">DROP 001 / LIMITED RELEASE / 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
