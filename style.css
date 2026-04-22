@@ -19,8 +19,8 @@
   --chrome-2: #b8c8d7;
   --chrome-3: #87a3bc;
 
-  --success: #7cffad;
-  --danger: #ff7272;
+  --success: #7dffb3;
+  --danger: #ff7d7d;
 
   --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
   --shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.5);
@@ -1296,6 +1296,25 @@ button {
 
 .checkout-submit-btn:hover {
   background: var(--pink-soft);
+}
+
+.checkout-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.form-status {
+  display: none;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.form-status-success {
+  color: var(--success);
+}
+
+.form-status-error {
+  color: var(--danger);
 }
 
 /* REVEAL */
