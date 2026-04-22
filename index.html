@@ -30,23 +30,101 @@
       <button class="bag-close" id="closeBagBtn" aria-label="Close bag">×</button>
     </div>
 
-    <div class="bag-items" id="bagItems">
-      <!-- Injected by JS -->
-    </div>
+    <div class="bag-items" id="bagItems"></div>
 
     <div class="bag-footer">
       <div class="bag-summary">
         <span>Subtotal</span>
         <strong id="bagSubtotal">€0</strong>
       </div>
-      <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+      <button class="checkout-btn" id="checkoutBtn">Continue to Order Form</button>
       <p class="bag-note">
-        Demo storefront for DROP 001. Connect this later to Stripe, Shopify, or a checkout page.
+        No online payment yet. Orders are sent by email after you fill in your information.
       </p>
     </div>
   </aside>
 
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="checkout-modal-backdrop" id="checkoutModalBackdrop"></div>
+
+  <section class="checkout-modal" id="checkoutModal" aria-hidden="true">
+    <div class="checkout-modal-header">
+      <div>
+        <p class="bag-eyebrow">SVVVD</p>
+        <h2 class="checkout-modal-title">Order Form</h2>
+      </div>
+      <button class="bag-close" id="closeCheckoutModalBtn" aria-label="Close order form">×</button>
+    </div>
+
+    <div class="checkout-modal-body">
+      <div class="checkout-order-preview">
+        <p class="checkout-preview-label">Order Summary</p>
+        <div id="checkoutOrderPreview"></div>
+      </div>
+
+      <form class="checkout-form" id="checkoutForm">
+        <div class="checkout-grid">
+          <div class="form-field">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" name="fullName" required />
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="form-field">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+
+          <div class="form-field">
+            <label for="instagramHandle">Instagram Handle</label>
+            <input type="text" id="instagramHandle" name="instagramHandle" placeholder="@yourhandle" />
+          </div>
+
+          <div class="form-field">
+            <label for="country">Country *</label>
+            <input type="text" id="country" name="country" required />
+          </div>
+
+          <div class="form-field">
+            <label for="city">City *</label>
+            <input type="text" id="city" name="city" required />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="address">Full Address *</label>
+          <textarea id="address" name="address" required></textarea>
+        </div>
+
+        <div class="form-field">
+          <label for="postalCode">Postal Code / Zip Code</label>
+          <input type="text" id="postalCode" name="postalCode" />
+        </div>
+
+        <div class="form-field">
+          <label for="notes">Extra Notes</label>
+          <textarea
+            id="notes"
+            name="notes"
+            placeholder="Size preference confirmation, delivery details, questions, etc."
+          ></textarea>
+        </div>
+
+        <p class="checkout-help">
+          When you submit, your email app will open a prefilled order message addressed to
+          <strong>Svvvdbuisness@gmail.com</strong>.
+        </p>
+
+        <button type="submit" class="checkout-submit-btn">Send Order</button>
+      </form>
+    </div>
+  </section>
 
   <!-- NAV -->
   <nav class="site-nav">
@@ -167,7 +245,7 @@
             <p class="product-code">DROP 001</p>
             <h3 class="product-name red-text">RED FLAG</h3>
             <p class="product-desc">
-              A deep red edition built around the 22, stripe tension, and early-2000s sports energy.
+             Deep red, 22, stripe tension, early-2000s energy — this one’s for the red flags. If you are one, you already know. Not here to fix anything.
             </p>
 
             <div class="product-meta">
@@ -184,9 +262,9 @@
             <div class="size-block">
               <span class="size-label">Select size</span>
               <div class="size-options">
-                <button class="size-btn" data-size="S">S</button>
-                <button class="size-btn" data-size="M">M</button>
-                <button class="size-btn" data-size="L">L</button>
+                <button class="size-btn" data-size="S" type="button">S</button>
+                <button class="size-btn" data-size="M" type="button">M</button>
+                <button class="size-btn" data-size="L" type="button">L</button>
               </div>
             </div>
 
@@ -196,6 +274,7 @@
               data-price="65"
               data-image="images/red-flag.png"
               data-stock="10 pieces"
+              type="button"
             >
               Add to Bag
             </button>
@@ -232,9 +311,9 @@
             <div class="size-block">
               <span class="size-label">Select size</span>
               <div class="size-options">
-                <button class="size-btn" data-size="S">S</button>
-                <button class="size-btn" data-size="M">M</button>
-                <button class="size-btn" data-size="L">L</button>
+                <button class="size-btn" data-size="S" type="button">S</button>
+                <button class="size-btn" data-size="M" type="button">M</button>
+                <button class="size-btn" data-size="L" type="button">L</button>
               </div>
             </div>
 
@@ -244,6 +323,7 @@
               data-price="65"
               data-image="images/azul.png"
               data-stock="10 pieces"
+              type="button"
             >
               Add to Bag
             </button>
@@ -280,9 +360,9 @@
             <div class="size-block">
               <span class="size-label">Select size</span>
               <div class="size-options">
-                <button class="size-btn" data-size="XS">XS</button>
-                <button class="size-btn" data-size="S">S</button>
-                <button class="size-btn" data-size="M">M</button>
+                <button class="size-btn" data-size="XS" type="button">XS</button>
+                <button class="size-btn" data-size="S" type="button">S</button>
+                <button class="size-btn" data-size="M" type="button">M</button>
               </div>
             </div>
 
@@ -292,6 +372,7 @@
               data-price="65"
               data-image="images/pinked.png"
               data-stock="15 pieces"
+              type="button"
             >
               Add to Bag
             </button>
@@ -323,24 +404,40 @@
           <p class="about-big-number">22</p>
           <div class="about-line"></div>
           <p class="about-quote">
-            Each piece is limited. Each detail is intentional.
+            No big philosophy. Just doing what feels right, until it doesn’t.
           </p>
         </div>
       </div>
 
       <div class="about-copy reveal delay-1">
         <p class="section-eyebrow">About SVVVD</p>
-        <h2 class="section-title about-title">A BRAND IN ITS FIRST SIGNAL</h2>
+        <h2 class="section-title about-title">A BRAND IN MOTION</h2>
 
         <p class="about-text">
-          SVVVD is a work in progress by design. DROP 001 is the first release:
-          limited in quantity, direct in attitude, and built around a single visual code.
+          SVVVD isn’t a master plan. It’s just someone following a feeling and seeing how far it goes.
         </p>
 
         <p class="about-text">
-          The number 22, the stripes, and the mesh are not random details. They are the
-          structure of the piece — deliberate references shaped into something current.
-          This is not about nostalgia alone. It is about wearing the era with intention.
+          DROP 001 is the starting point. Not because it’s perfect, but because it exists. Limited pieces,
+          one clear direction, no overthinking.
+        </p>
+
+        <p class="about-text">
+          22, the stripes, the mesh — not random, not that deep either. Just things that made sense at the
+          time and still do. It’s not nostalgia, it’s not futuristic, it’s just… now.
+        </p>
+
+        <p class="about-text">
+          SVVVD doesn’t stick to one style. If it fits, it stays. If it doesn’t, it’s gone. Simple as that.
+        </p>
+
+        <p class="about-text">
+          No big philosophy. Just doing what feels right, until it doesn’t.
+        </p>
+
+        <p class="about-text about-joke">
+          your mom’s favorite website<br />
+          -10% if she follows the Instagram
         </p>
 
         <div class="about-stats">
@@ -388,7 +485,7 @@
 
         <div class="contact-card reveal delay-1">
           <p class="contact-card-label">Email</p>
-          <a href="mailto:Svvvdbuisness@gmail.com" class="contact-link">Svvvdbuisness@gmail.com</a>
+          <a href="mailto:elomaris310@gmail.com" class="contact-link">Svvvdbuisness@gmail.com</a>
           <p class="contact-card-text">
             Use this for direct order requests, collaborations, and customer questions.
           </p>
