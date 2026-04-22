@@ -15,9 +15,13 @@ const checkoutModalBackdrop = document.getElementById("checkoutModalBackdrop");
 const closeCheckoutModalBtn = document.getElementById("closeCheckoutModalBtn");
 const checkoutOrderPreview = document.getElementById("checkoutOrderPreview");
 const checkoutForm = document.getElementById("checkoutForm");
+const checkoutSubmitBtn = document.getElementById("checkoutSubmitBtn");
+const checkoutSuccess = document.getElementById("checkoutSuccess");
+const checkoutError = document.getElementById("checkoutError");
 
 const STORAGE_KEY = "svvvd_bag";
-const ORDER_EMAIL = "Svvvdbuisness@gmail.com";
+const ORDER_EMAIL = "elomaris310@gmail.com";
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${ORDER_EMAIL}`;
 
 let bag = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
@@ -47,6 +51,20 @@ function escapeHtml(text) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function resetCheckoutStatus() {
+  checkoutSuccess.style.display = "none";
+  checkoutError.style.display = "none";
+}
+
+function getOrderItemsText() {
+  return bag
+    .map(
+      (item, index) =>
+        `${index + 1}. ${item.name} / Size ${item.size} / €${item.price} / ${item.stock}`
+    )
+    .join("\n");
 }
 
 /* -------------------------
@@ -95,6 +113,7 @@ function renderBag() {
       bag.splice(index, 1);
       saveBag();
       renderBag();
+      renderCheckoutPreview();
     });
   });
 }
@@ -118,9 +137,7 @@ function closeBag() {
 ------------------------- */
 function renderCheckoutPreview() {
   if (bag.length === 0) {
-    checkoutOrderPreview.innerHTML = `
-      <p class="checkout-preview-item">Your bag is empty.</p>
-    `;
+    checkoutOrderPreview.innerHTML = `<p class="checkout-preview-item">Your bag is empty.</p>`;
     return;
   }
 
@@ -146,6 +163,8 @@ function openCheckoutModal() {
     return;
   }
 
+  closeBag();
+  resetCheckoutStatus();
   renderCheckoutPreview();
   checkoutModal.classList.add("open");
   checkoutModalBackdrop.classList.add("active");
@@ -284,75 +303,96 @@ function setupCursorGlow() {
 }
 
 /* -------------------------
-   ORDER EMAIL
+   CHECKOUT SUBMISSION
 ------------------------- */
-function buildOrderEmailBody(formData) {
-  const itemsText = bag
-    .map(
-      (item, index) =>
-        `${index + 1}. ${item.name} / Size ${item.size} / €${item.price}`
-    )
-    .join("\n");
+function setupCheckout() {
+  checkoutBtn.addEventListener("click", openCheckoutModal);
+  closeCheckoutModalBtn.addEventListener("click", closeCheckoutModal);
+  checkoutModalBackdrop.addEventListener("click", closeCheckoutModal);
 
-  return `
+  checkoutForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    resetCheckoutStatus();
+
+    if (bag.length === 0) {
+      checkoutError.textContent = "Your bag is empty.";
+      checkoutError.style.display = "block";
+      return;
+    }
+
+    checkoutSubmitBtn.disabled = true;
+    checkoutSubmitBtn.textContent = "Sending...";
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const instagramHandle = document.getElementById("instagramHandle").value.trim();
+    const country = document.getElementById("country").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const postalCode = document.getElementById("postalCode").value.trim();
+    const notes = document.getElementById("notes").value.trim();
+
+    const formData = new FormData();
+    formData.append("name", fullName);
+    formData.append("email", email);
+    formData.append("_subject", `SVVVD Order Request - ${fullName}`);
+    formData.append(
+      "message",
+      `
 SVVVD ORDER REQUEST
 
 CUSTOMER INFORMATION
-Full name: ${formData.fullName}
-Email: ${formData.email}
-Phone number: ${formData.phone}
-Instagram handle: ${formData.instagramHandle || "N/A"}
+Full name: ${fullName}
+Email: ${email}
+Phone number: ${phone}
+Instagram handle: ${instagramHandle || "N/A"}
 
 DELIVERY INFORMATION
-Country: ${formData.country}
-City: ${formData.city}
-Address: ${formData.address}
-Postal code: ${formData.postalCode || "N/A"}
+Country: ${country}
+City: ${city}
+Address: ${address}
+Postal code: ${postalCode || "N/A"}
 
 ORDER
-${itemsText}
+${getOrderItemsText()}
 
 Subtotal: €${calculateSubtotal()}
 
 EXTRA NOTES
-${formData.notes || "N/A"}
-  `.trim();
-}
-
-function setupCheckout() {
-  checkoutBtn.addEventListener("click", () => {
-    openCheckoutModal();
-  });
-
-  closeCheckoutModalBtn.addEventListener("click", closeCheckoutModal);
-  checkoutModalBackdrop.addEventListener("click", closeCheckoutModal);
-
-  checkoutForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    if (bag.length === 0) {
-      alert("Your bag is empty.");
-      return;
-    }
-
-    const formData = {
-      fullName: document.getElementById("fullName").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      phone: document.getElementById("phone").value.trim(),
-      instagramHandle: document.getElementById("instagramHandle").value.trim(),
-      country: document.getElementById("country").value.trim(),
-      city: document.getElementById("city").value.trim(),
-      address: document.getElementById("address").value.trim(),
-      postalCode: document.getElementById("postalCode").value.trim(),
-      notes: document.getElementById("notes").value.trim(),
-    };
-
-    const subject = encodeURIComponent(
-      `SVVVD Order Request - ${formData.fullName}`
+${notes || "N/A"}
+      `.trim()
     );
-    const body = encodeURIComponent(buildOrderEmailBody(formData));
 
-    window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        checkoutSuccess.style.display = "block";
+        checkoutForm.reset();
+        bag = [];
+        saveBag();
+        renderBag();
+        renderCheckoutPreview();
+
+        setTimeout(() => {
+          closeCheckoutModal();
+        }, 1400);
+      } else {
+        checkoutError.style.display = "block";
+      }
+    } catch (error) {
+      checkoutError.style.display = "block";
+    } finally {
+      checkoutSubmitBtn.disabled = false;
+      checkoutSubmitBtn.textContent = "Send Order";
+    }
   });
 }
 
@@ -380,3 +420,4 @@ setupReveal();
 setupCursorGlow();
 setupCheckout();
 renderBag();
+renderCheckoutPreview();
