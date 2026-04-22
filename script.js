@@ -10,7 +10,14 @@ const navMenuBtn = document.getElementById("navMenuBtn");
 const navLinksWrap = document.getElementById("navLinksWrap");
 const cursorGlow = document.getElementById("cursorGlow");
 
+const checkoutModal = document.getElementById("checkoutModal");
+const checkoutModalBackdrop = document.getElementById("checkoutModalBackdrop");
+const closeCheckoutModalBtn = document.getElementById("closeCheckoutModalBtn");
+const checkoutOrderPreview = document.getElementById("checkoutOrderPreview");
+const checkoutForm = document.getElementById("checkoutForm");
+
 const STORAGE_KEY = "svvvd_bag";
+const ORDER_EMAIL = "Svvvdbuisness@gmail.com";
 
 let bag = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
@@ -31,6 +38,15 @@ function updateBagCount() {
 
 function calculateSubtotal() {
   return bag.reduce((sum, item) => sum + item.price, 0);
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 /* -------------------------
@@ -54,17 +70,17 @@ function renderBag() {
     .map(
       (item, index) => `
         <div class="bag-item">
-          <img src="${item.image}" alt="${item.name}" />
+          <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" />
           <div>
-            <h3 class="bag-item-name">${item.name}</h3>
+            <h3 class="bag-item-name">${escapeHtml(item.name)}</h3>
             <p class="bag-item-meta">
-              Size: ${item.size}<br />
-              Price: €${item.price}<br />
-              Stock: ${item.stock}
+              Size: ${escapeHtml(item.size)}<br />
+              Price: €${escapeHtml(item.price)}<br />
+              Stock: ${escapeHtml(item.stock)}
             </p>
-            <button class="remove-btn" data-remove-index="${index}">Remove</button>
+            <button class="remove-btn" data-remove-index="${index}" type="button">Remove</button>
           </div>
-          <div class="bag-item-price">€${item.price}</div>
+          <div class="bag-item-price">€${escapeHtml(item.price)}</div>
         </div>
       `
     )
@@ -94,6 +110,53 @@ function closeBag() {
   bagDrawer.classList.remove("open");
   drawerBackdrop.classList.remove("active");
   bagDrawer.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+/* -------------------------
+   CHECKOUT MODAL
+------------------------- */
+function renderCheckoutPreview() {
+  if (bag.length === 0) {
+    checkoutOrderPreview.innerHTML = `
+      <p class="checkout-preview-item">Your bag is empty.</p>
+    `;
+    return;
+  }
+
+  const itemsHtml = bag
+    .map(
+      (item, index) => `
+        <p class="checkout-preview-item">
+          ${index + 1}. ${escapeHtml(item.name)} / Size ${escapeHtml(item.size)} / €${escapeHtml(item.price)}
+        </p>
+      `
+    )
+    .join("");
+
+  checkoutOrderPreview.innerHTML = `
+    ${itemsHtml}
+    <p class="checkout-preview-total">Subtotal: €${calculateSubtotal()}</p>
+  `;
+}
+
+function openCheckoutModal() {
+  if (bag.length === 0) {
+    alert("Your bag is empty.");
+    return;
+  }
+
+  renderCheckoutPreview();
+  checkoutModal.classList.add("open");
+  checkoutModalBackdrop.classList.add("active");
+  checkoutModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeCheckoutModal() {
+  checkoutModal.classList.remove("open");
+  checkoutModalBackdrop.classList.remove("active");
+  checkoutModal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
 }
 
@@ -221,18 +284,75 @@ function setupCursorGlow() {
 }
 
 /* -------------------------
-   CHECKOUT DEMO
+   ORDER EMAIL
 ------------------------- */
+function buildOrderEmailBody(formData) {
+  const itemsText = bag
+    .map(
+      (item, index) =>
+        `${index + 1}. ${item.name} / Size ${item.size} / €${item.price}`
+    )
+    .join("\n");
+
+  return `
+SVVVD ORDER REQUEST
+
+CUSTOMER INFORMATION
+Full name: ${formData.fullName}
+Email: ${formData.email}
+Phone number: ${formData.phone}
+Instagram handle: ${formData.instagramHandle || "N/A"}
+
+DELIVERY INFORMATION
+Country: ${formData.country}
+City: ${formData.city}
+Address: ${formData.address}
+Postal code: ${formData.postalCode || "N/A"}
+
+ORDER
+${itemsText}
+
+Subtotal: €${calculateSubtotal()}
+
+EXTRA NOTES
+${formData.notes || "N/A"}
+  `.trim();
+}
+
 function setupCheckout() {
   checkoutBtn.addEventListener("click", () => {
+    openCheckoutModal();
+  });
+
+  closeCheckoutModalBtn.addEventListener("click", closeCheckoutModal);
+  checkoutModalBackdrop.addEventListener("click", closeCheckoutModal);
+
+  checkoutForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
     if (bag.length === 0) {
       alert("Your bag is empty.");
       return;
     }
 
-    alert(
-      "This is a demo storefront. Your bag is ready, but checkout is not connected yet."
+    const formData = {
+      fullName: document.getElementById("fullName").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      instagramHandle: document.getElementById("instagramHandle").value.trim(),
+      country: document.getElementById("country").value.trim(),
+      city: document.getElementById("city").value.trim(),
+      address: document.getElementById("address").value.trim(),
+      postalCode: document.getElementById("postalCode").value.trim(),
+      notes: document.getElementById("notes").value.trim(),
+    };
+
+    const subject = encodeURIComponent(
+      `SVVVD Order Request - ${formData.fullName}`
     );
+    const body = encodeURIComponent(buildOrderEmailBody(formData));
+
+    window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
   });
 }
 
@@ -246,6 +366,7 @@ drawerBackdrop.addEventListener("click", closeBag);
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeBag();
+    closeCheckoutModal();
   }
 });
 
