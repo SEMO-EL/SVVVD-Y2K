@@ -37,9 +37,9 @@
         <span>Subtotal</span>
         <strong id="bagSubtotal">€0</strong>
       </div>
-      <button class="checkout-btn" id="checkoutBtn">Continue to Order Form</button>
+      <button class="checkout-btn" id="checkoutBtn" type="button">Continue to Order Form</button>
       <p class="bag-note">
-        No online payment yet. Orders are sent by email after you fill in your information.
+        No online payment yet. Orders are sent directly through the order form.
       </p>
     </div>
   </aside>
@@ -112,16 +112,23 @@
           <textarea
             id="notes"
             name="notes"
-            placeholder="Size preference confirmation, delivery details, questions, etc."
+            placeholder="Delivery notes, questions, special instructions, etc."
           ></textarea>
         </div>
 
         <p class="checkout-help">
-          When you submit, your email app will open a prefilled order message addressed to
-          <strong>Svvvdbuisness@gmail.com</strong>.
+          Your order will be sent directly from the website to <strong>elomaris310@gmail.com</strong>.
         </p>
 
-        <button type="submit" class="checkout-submit-btn">Send Order</button>
+        <button type="submit" class="checkout-submit-btn" id="checkoutSubmitBtn">Send Order</button>
+
+        <div class="form-status form-status-success" id="checkoutSuccess">
+          Order sent successfully.
+        </div>
+
+        <div class="form-status form-status-error" id="checkoutError">
+          Something went wrong. Please try again.
+        </div>
       </form>
     </div>
   </section>
@@ -146,7 +153,7 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <button class="nav-bag-btn" id="openBagBtn">
+      <button class="nav-bag-btn" id="openBagBtn" type="button">
         BAG <span id="bagCount">[ 0 ]</span>
       </button>
     </div>
@@ -170,12 +177,13 @@
       </div>
 
       <h1 class="hero-title reveal delay-2">
-        WEAR IT <br />
-        YOUR WAY
+        FOOTBALL MEMORY<br />
+        FUTURE DISTORTION
       </h1>
 
       <p class="hero-text reveal delay-3">
-        Y2K influence, no rules attached. Just pieces that speak without trying too hard.
+        Limited pieces. Intentional details. The 22, the stripes, the mesh —
+        everything is built for those who carry the era in the way they move.
       </p>
 
       <div class="hero-actions reveal delay-4">
@@ -244,7 +252,7 @@
             <p class="product-code">DROP 001</p>
             <h3 class="product-name red-text">RED FLAG</h3>
             <p class="product-desc">
-             Deep red, 22, stripe tension, early-2000s energy — this one’s for the red flags. If you are one, you already know. Not here to fix anything.
+              A deep red edition built around the 22, stripe tension, and early-2000s sports energy.
             </p>
 
             <div class="product-meta">
@@ -484,7 +492,7 @@
 
         <div class="contact-card reveal delay-1">
           <p class="contact-card-label">Email</p>
-          <a href="mailto:elomaris310@gmail.com" class="contact-link">Svvvdbuisness@gmail.com</a>
+          <a href="mailto:elomaris310@gmail.com" class="contact-link">elomaris310@gmail.com</a>
           <p class="contact-card-text">
             Use this for direct order requests, collaborations, and customer questions.
           </p>
