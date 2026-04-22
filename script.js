@@ -20,7 +20,7 @@ const checkoutSuccess = document.getElementById("checkoutSuccess");
 const checkoutError = document.getElementById("checkoutError");
 
 const STORAGE_KEY = "svvvd_bag";
-const ORDER_EMAIL = "elomaris310@gmail.com";
+const ORDER_EMAIL = "Svvvdbuisness@gmail.com";
 const FORM_ENDPOINT = `https://formsubmit.co/ajax/${ORDER_EMAIL}`;
 
 let bag = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
