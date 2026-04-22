@@ -33,7 +33,7 @@ function saveBag() {
 }
 
 function formatPrice(value) {
-  return `€${value}`;
+  return `MAD${value}`;
 }
 
 function updateBagCount() {
@@ -62,7 +62,7 @@ function getOrderItemsText() {
   return bag
     .map(
       (item, index) =>
-        `${index + 1}. ${item.name} / Size ${item.size} / €${item.price} / ${item.stock}`
+        `${index + 1}. ${item.name} / Size ${item.size} / MAD${item.price} / ${item.stock}`
     )
     .join("\n");
 }
@@ -80,7 +80,7 @@ function renderBag() {
         Select a size on a piece from DROP 001 and add it here.
       </div>
     `;
-    bagSubtotal.textContent = "€0";
+    bagSubtotal.textContent = "MAD0";
     return;
   }
 
@@ -93,12 +93,12 @@ function renderBag() {
             <h3 class="bag-item-name">${escapeHtml(item.name)}</h3>
             <p class="bag-item-meta">
               Size: ${escapeHtml(item.size)}<br />
-              Price: €${escapeHtml(item.price)}<br />
+              Price: MAD${escapeHtml(item.price)}<br />
               Stock: ${escapeHtml(item.stock)}
             </p>
             <button class="remove-btn" data-remove-index="${index}" type="button">Remove</button>
           </div>
-          <div class="bag-item-price">€${escapeHtml(item.price)}</div>
+          <div class="bag-item-price">MAD${escapeHtml(item.price)}</div>
         </div>
       `
     )
@@ -145,7 +145,7 @@ function renderCheckoutPreview() {
     .map(
       (item, index) => `
         <p class="checkout-preview-item">
-          ${index + 1}. ${escapeHtml(item.name)} / Size ${escapeHtml(item.size)} / €${escapeHtml(item.price)}
+          ${index + 1}. ${escapeHtml(item.name)} / Size ${escapeHtml(item.size)} / MAD${escapeHtml(item.price)}
         </p>
       `
     )
@@ -153,7 +153,7 @@ function renderCheckoutPreview() {
 
   checkoutOrderPreview.innerHTML = `
     ${itemsHtml}
-    <p class="checkout-preview-total">Subtotal: €${calculateSubtotal()}</p>
+    <p class="checkout-preview-total">Subtotal: MAD${calculateSubtotal()}</p>
   `;
 }
 
@@ -357,7 +357,7 @@ Postal code: ${postalCode || "N/A"}
 ORDER
 ${getOrderItemsText()}
 
-Subtotal: €${calculateSubtotal()}
+Subtotal: MAD${calculateSubtotal()}
 
 EXTRA NOTES
 ${notes || "N/A"}
