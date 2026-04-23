@@ -288,12 +288,15 @@
         </article>
 
         <!-- AZUL -->
-        <article class="product-card reveal delay-1" data-product-id="azul">
+        <article class="product-card product-card-sold-out reveal delay-1" data-product-id="azul">
           <div class="product-topline product-topline-blue"></div>
 
-          <div class="product-image-wrap azul-bg">
-            <span class="product-badge">10 PIECES</span>
-            <img src="images/azul.png" alt="SVVVD Azul jersey" class="product-image" />
+          <div class="product-image-wrap azul-bg sold-out-wrap">
+            <span class="product-badge sold-out-badge">SOLD OUT</span>
+            <div class="sold-out-overlay" aria-hidden="true">
+              <span>SOLD OUT</span>
+            </div>
+            <img src="images/azul.png" alt="SVVVD Azul jersey sold out" class="product-image sold-out-image" />
           </div>
 
           <div class="product-body">
@@ -310,28 +313,29 @@
               </div>
               <div>
                 <span class="meta-label">Available</span>
-                <strong class="meta-value">S / M / L</strong>
+                <strong class="meta-value sold-out-text">SOLD OUT</strong>
               </div>
             </div>
 
             <div class="size-block">
               <span class="size-label">Select size</span>
               <div class="size-options">
-                <button class="size-btn" data-size="S" type="button">S</button>
-                <button class="size-btn" data-size="M" type="button">M</button>
-                <button class="size-btn" data-size="L" type="button">L</button>
+                <button class="size-btn size-btn-disabled" data-size="S" type="button" disabled>S</button>
+                <button class="size-btn size-btn-disabled" data-size="M" type="button" disabled>M</button>
+                <button class="size-btn size-btn-disabled" data-size="L" type="button" disabled>L</button>
               </div>
             </div>
 
             <button
-              class="add-btn"
+              class="add-btn add-btn-disabled"
               data-name="Azul"
               data-price="450"
               data-image="images/azul.png"
-              data-stock="10 pieces"
+              data-stock="Sold out"
               type="button"
+              disabled
             >
-              Add to Bag
+              Sold Out
             </button>
           </div>
         </article>
