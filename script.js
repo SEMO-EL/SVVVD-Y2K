@@ -186,7 +186,7 @@ function setupSizeSelectors() {
   const productCards = document.querySelectorAll(".product-card");
 
   productCards.forEach((card) => {
-    const sizeButtons = card.querySelectorAll(".size-btn");
+    const sizeButtons = card.querySelectorAll(".size-btn:not([disabled])");
 
     sizeButtons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -204,6 +204,8 @@ function setupAddToBagButtons() {
   const addButtons = document.querySelectorAll(".add-btn");
 
   addButtons.forEach((button) => {
+    if (button.disabled) return;
+
     button.addEventListener("click", () => {
       const card = button.closest(".product-card");
       const activeSize = card.querySelector(".size-btn.active");
