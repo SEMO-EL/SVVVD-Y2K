@@ -239,12 +239,15 @@
 
       <div class="product-grid">
         <!-- RED FLAG -->
-        <article class="product-card reveal" data-product-id="red-flag">
+        <article class="product-card product-card-sold-out reveal" data-product-id="red-flag">
           <div class="product-topline product-topline-red"></div>
 
-          <div class="product-image-wrap red-bg">
-            <span class="product-badge">10 PIECES</span>
-            <img src="images/red-flag.png" alt="SVVVD Red Flag jersey" class="product-image" />
+          <div class="product-image-wrap red-bg sold-out-wrap">
+            <span class="product-badge sold-out-badge">SOLD OUT</span>
+            <div class="sold-out-overlay" aria-hidden="true">
+              <span>SOLD OUT</span>
+            </div>
+            <img src="images/red-flag.png" alt="SVVVD Red Flag jersey sold out" class="product-image sold-out-image" />
           </div>
 
           <div class="product-body">
@@ -261,28 +264,29 @@
               </div>
               <div>
                 <span class="meta-label">Available</span>
-                <strong class="meta-value">S / M / L</strong>
+                <strong class="meta-value sold-out-text">SOLD OUT</strong>
               </div>
             </div>
 
             <div class="size-block">
               <span class="size-label">Select size</span>
               <div class="size-options">
-                <button class="size-btn" data-size="S" type="button">S</button>
-                <button class="size-btn" data-size="M" type="button">M</button>
-                <button class="size-btn" data-size="L" type="button">L</button>
+                <button class="size-btn size-btn-disabled" data-size="S" type="button" disabled>S</button>
+                <button class="size-btn size-btn-disabled" data-size="M" type="button" disabled>M</button>
+                <button class="size-btn size-btn-disabled" data-size="L" type="button" disabled>L</button>
               </div>
             </div>
 
             <button
-              class="add-btn"
+              class="add-btn add-btn-disabled"
               data-name="Red Flag"
               data-price="450"
               data-image="images/red-flag.png"
-              data-stock="10 pieces"
+              data-stock="Sold out"
               type="button"
+              disabled
             >
-              Add to Bag
+              Sold Out
             </button>
           </div>
         </article>
